@@ -27,11 +27,16 @@ object main  extends App {
     listener <- ZIO.fromFuture(_ => Http().bindAndHandle(route, "0.0.0.0", config.httpPort))
   } yield listener
 
-  //add support for akka-http
   private val env = new SettingsLive with Console.Live {}
 
   override def run(args: List[String]): ZIO[zio.ZEnv, Nothing, Int] = {
    val zio = for {
+     config <- appConfig
+     _ <- migration.migrate(
+       config.database.schema,
+       config.database.jdbcUrl,
+       config.database.user,
+       config.database.password)
      _ <- akkaApp *> ZIO.never
     } yield ()
 

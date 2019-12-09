@@ -7,7 +7,6 @@ import pureconfig.ConfigSource
 import pureconfig.generic.auto._
 import pureconfig.error._
 
-
 object Settings {
   trait Service {
     def appConfig: Either[ConfigError, AppConfig]
