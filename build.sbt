@@ -14,10 +14,11 @@ val CatsEffectVersion = "2.0.0"
 val AkkaStreamVersion = "2.5.26"
 val FlywayVersion = "6.1.0"
 val DoobieVersion = "0.8.6"
+val LoggingZIOVersion = "0.4.0"
 
 libraryDependencies ++=  Seq(
-  "dev.zio" %% "zio" % ZioVersion,
-  "dev.zio" %% "zio-interop-cats" % ZioCatsVersion,
+  "dev.zio"               %% "zio"                 % ZioVersion,
+  "dev.zio"               %% "zio-interop-cats"    % ZioCatsVersion,
   "com.typesafe.akka"     %% "akka-http"           % AkkaHttpVersion,
   "com.typesafe.akka"     %% "akka-stream"         % AkkaStreamVersion,
   "de.heikoseeberger"     %% "akka-http-circe"     % AkkaHttpCirce,
@@ -31,6 +32,7 @@ libraryDependencies ++=  Seq(
   "org.tpolecat"          %% "doobie-core"         % DoobieVersion,
   "org.tpolecat"          %% "doobie-postgres"     % DoobieVersion,
   "org.tpolecat"          %% "doobie-hikari"       % DoobieVersion,
+  "com.github.mlangc"     %% "slf4zio"             % LoggingZIOVersion
 )
 
 scalacOptions ++= Seq(
@@ -45,4 +47,3 @@ scalacOptions ++= Seq(
 
 addCompilerPlugin("com.olegpy"     %% "better-monadic-for" % "0.3.1") 
 
-addCompilerPlugin("com.github.cb372" % "scala-typed-holes" % "0.1.1" cross CrossVersion.full)

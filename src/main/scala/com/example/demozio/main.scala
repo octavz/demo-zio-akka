@@ -3,20 +3,19 @@ package com.example.demozio
 import zio._
 import zio.console._
 import zio.blocking.Blocking
-
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Directives
 import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
+import com.github.mlangc.slf4zio.api._
 import modules._
-
 import models._
 import configuration._
 import repository._
 import transactor._
 
-object main extends App {
+object main extends App with LoggingSupport{
   import io.circe.generic.auto._
   import de.heikoseeberger.akkahttpcirce._
   import FailFastCirceSupport._
@@ -66,6 +65,6 @@ object main extends App {
     }
 
   def handleError(e: Throwable): UIO[Int] =
-    ZIO(e.printStackTrace()).as(1).orDie
+    logger.errorIO("Error in main", e).as(1)
 
 }
