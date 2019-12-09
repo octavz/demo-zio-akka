@@ -23,10 +23,13 @@ object transactor {
         c.database.user,
         c.database.password,
         connectEC,
-        blocker)
+        blocker).map { resource =>
+        resource.kernel.setSchema(c.database.schema)
+        resource
+      }
+
     } yield transactor
 
-    //we had to transform from zio to managed
     zio.toManaged_.flatMap { tr =>
       val reservation = tr.allocated.map {
         case (trans, cleanup) => Reservation(ZIO.succeed(trans), _ => cleanup.orDie)
