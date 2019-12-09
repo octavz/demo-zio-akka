@@ -3,6 +3,7 @@ package com.example.demozio
 import com.example.demozio.modules.{Settings, SettingsLive}
 import zio._
 import zio.console._
+import configuration._
 
 object main  extends App {
 
@@ -11,9 +12,8 @@ object main  extends App {
   //add configuration
   override def run(args: List[String]): ZIO[zio.ZEnv, Nothing, Int] = {
    val zio = for {
-     config <- ZIO.access[Settings](_.settings.appConfig)
-     port <- config.fold(t => ZIO.fail(t), c => ZIO.succeed(c.httpPort))
-      _ <- putStrLn(port.toString)
+     config <- appConfig
+      _ <- putStrLn(config.httpPort.toString)
     } yield ()
 
     zio.provide(env).foldM(handleError, _ => ZIO.succeed(0))
